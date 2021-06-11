@@ -4,19 +4,23 @@
 # Youku video tutorial: http://i.youku.com/pythontutorial
 
 import multiprocessing as mp
+from multiprocessing import pool
+
 
 def job(x):
     return x*x
 
+
 def multicore():
-    pool = mp.Pool(processes=2)
-    res = pool.map(job, range(10))
-    print(res)
-    res = pool.apply_async(job, (2,))
-    print(res.get())
-    multi_res =[pool.apply_async(job, (i,)) for i in range(10)]
-    print([res.get() for res in multi_res])
-    
+    pool = mp.Pool()
+    result = pool.map(job, range(10))
+    print(result)
+
+    # can't use iterable
+    # result = pool.apply_async(job, range(10))
+    result = [pool.apply_async(job , (i,)) for i in range(10)]
+    result_value = [res.get() for res in result]
+    print(result_value)
 
 if __name__ == '__main__':
     multicore()
