@@ -16,6 +16,10 @@ def multicore():
     result = pool.map(job, range(10))
     print(result)
 
+    test_list = [1, 2, 3, 4, 5]
+    result = pool.map(job, test_list)
+    print(result)
+
     # can't use iterable
     # result = pool.apply_async(job, range(10))
     result = [pool.apply_async(job , (i,)) for i in range(10)]
